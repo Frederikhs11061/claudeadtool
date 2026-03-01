@@ -82,6 +82,13 @@
       align-items: center;
       gap: 0.5rem;
     }
+    .section {
+      padding: 0.75rem 1.25rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #818cf8;
+      border-bottom: 1px solid #252538;
+    }
     .result-header a { color: #818cf8; text-decoration: none; }
     .result-header a:hover { text-decoration: underline; }
     .checks {
@@ -163,38 +170,33 @@
         out.innerHTML = '<div class="error-box">' + escapeHtml(json.error) + '</div>';
         return;
       }
-      const checks = json.checks || [];
-      const base = window.location.origin;
+      const d = json.data || {};
+      const grades = json.grades || {};
       let html = '<div class="result">';
-      html += '<div class="result-header"><span>Resultat for</span> <a href="' + escapeHtml(json.url) + '" target="_blank" rel="noopener">' + escapeHtml(json.url) + '</a></div>';
-      html += '<div class="checks">';
+      html += '<div class="result-header"><span>Landing Page Quality Analysis —</span> <a href="' + escapeHtml(json.url) + '" target="_blank" rel="noopener">' + escapeHtml(json.url) + '</a></div>';
+
+      html += '<div class="section">Content</div>';
+      html += '<div class="check"><span class="icon info">i</span><div class="check-body"><div class="check-name">Title</div><div class="check-value">' + escapeHtml(d.content?.title || '—') + '</div></div></div>';
+      html += '<div class="check"><span class="icon ' + (d.content?.h1 ? 'pass' : 'fail') + '">' + (d.content?.h1 ? '✓' : '✕') + '</span><div class="check-body"><div class="check-name">H1</div><div class="check-value">' + escapeHtml(d.content?.h1 || 'MISSING') + '</div></div></div>';
+      html += '<div class="check"><span class="icon info">i</span><div class="check-body"><div class="check-name">Words</div><div class="check-value">' + (d.content?.word_count ?? 0) + '</div></div></div>';
+
+      html += '<div class="section">Conversion Elements</div>';
+      html += '<div class="check"><span class="icon ' + (grades.cta_above_fold === 'PASS' ? 'pass' : 'fail') + '">' + (grades.cta_above_fold === 'PASS' ? '✓' : '✕') + '</span><div class="check-body"><div class="check-name">CTA Above Fold</div><div class="check-msg">' + (grades.cta_above_fold === 'PASS' ? 'Y' : 'N') + '</div></div></div>';
+      html += '<div class="check"><span class="icon ' + (d.conversion?.form_present ? 'pass' : 'info') + '">' + (d.conversion?.form_present ? '✓' : 'i') + '</span><div class="check-body"><div class="check-name">Form</div><div class="check-msg">' + (d.conversion?.form_present ? 'Y (' + (d.conversion.form_fields || 0) + ' fields)' : 'N') + '</div></div></div>';
+      html += '<div class="check"><span class="icon ' + (d.conversion?.phone_number ? 'pass' : 'info') + '">' + (d.conversion?.phone_number ? '✓' : 'i') + '</span><div class="check-body"><div class="check-name">Phone</div><div class="check-msg">' + (d.conversion?.phone_number ? 'Y' : 'N') + '</div></div></div>';
+
+      html += '<div class="section">Schema</div>';
+      html += '<div class="check"><span class="icon info">i</span><div class="check-body"><div class="check-name">Types</div><div class="check-value">' + escapeHtml((d.schema?.types_found || []).join(', ') || 'None') + '</div></div></div>';
+
+      html += '<div class="section">Audit Grades (from analyze_landing.py)</div>';
+      const checks = json.checks || [];
       checks.forEach(function (c) {
         html += '<div class="check">';
         html += '<span class="icon ' + (c.status || 'info') + '">' + (c.status === 'pass' ? '✓' : c.status === 'fail' ? '✕' : c.status === 'warn' ? '!' : 'i') + '</span>';
-        html += '<div class="check-body">';
-        html += '<div class="check-name">' + escapeHtml(label(c.name)) + '</div>';
-        html += '<div class="check-msg">' + escapeHtml(c.message) + '</div>';
-        if (c.value != null && c.value !== '') html += '<div class="check-value">' + escapeHtml(String(c.value)) + '</div>';
-        html += '</div></div>';
+        html += '<div class="check-body"><div class="check-name">' + escapeHtml(c.name) + '</div><div class="check-msg">' + escapeHtml(c.value || c.message) + '</div></div></div>';
       });
-      html += '</div></div>';
+      html += '</div>';
       out.innerHTML = html;
-    }
-
-    function label(key) {
-      const labels = {
-        title: 'Titel',
-        meta_description: 'Meta beskrivelse',
-        h1: 'H1',
-        viewport: 'Viewport',
-        word_count: 'Ord på siden',
-        cta: 'Call-to-action',
-        form: 'Formular',
-        opengraph: 'Open Graph',
-        schema: 'Schema',
-        phone: 'Telefon',
-      };
-      return labels[key] || key;
     }
 
     function escapeHtml(s) {

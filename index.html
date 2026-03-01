@@ -1,161 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Claude Ads — Paid advertising audit for Claude Code</title>
+  <title>CRO Tool — Landing page audit</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body {
       font-family: 'DM Sans', system-ui, sans-serif;
-      line-height: 1.6;
       margin: 0;
-      color: #1a1a2e;
-      background: linear-gradient(165deg, #f8f9fc 0%, #eef1f8 50%, #e4e9f4 100%);
+      background: linear-gradient(165deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
       min-height: 100vh;
+      color: #e4e4ed;
     }
     .wrap {
-      max-width: 720px;
+      max-width: 640px;
       margin: 0 auto;
-      padding: 3rem 1.5rem 4rem;
+      padding: 2rem 1.25rem 3rem;
     }
-    .hero {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .hero h1 {
-      font-size: 2.25rem;
+    h1 {
+      font-size: 1.75rem;
       font-weight: 700;
-      margin: 0 0 0.75rem;
+      margin: 0 0 0.5rem;
       letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #1a1a2e 0%, #3d3d6b 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
-    .hero p {
-      font-size: 1.1rem;
-      color: #4a4a6a;
-      margin: 0;
-      max-width: 540px;
-      margin-left: auto;
-      margin-right: auto;
+    .sub {
+      color: #8b8ba7;
+      font-size: 0.95rem;
+      margin-bottom: 1.75rem;
     }
-    .badges {
+    .input-row {
       display: flex;
       gap: 0.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 1.25rem;
+      margin-bottom: 1rem;
     }
-    .badge {
-      display: inline-block;
-      background: rgba(26, 26, 46, 0.08);
-      color: #3d3d6b;
-      padding: 0.35rem 0.75rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 1.5rem 1.75rem;
-      margin-bottom: 1.25rem;
-      box-shadow: 0 2px 12px rgba(26, 26, 46, 0.06);
-      border: 1px solid rgba(26, 26, 46, 0.06);
-    }
-    .card h2 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin: 0 0 1rem;
-      color: #1a1a2e;
-    }
-    .card p { margin: 0 0 0.75rem; color: #4a4a6a; }
-    .card p:last-of-type { margin-bottom: 0; }
-    code {
-      background: #f0f1f5;
-      padding: 0.2em 0.45em;
-      border-radius: 6px;
-      font-size: 0.88em;
-      font-weight: 500;
-      color: #2d2d4a;
-    }
-    pre {
-      background: #1a1a2e;
-      color: #e4e4ed;
-      padding: 1rem 1.25rem;
+    .input-row input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid #3d3d5c;
       border-radius: 10px;
-      overflow-x: auto;
-      font-size: 0.9rem;
-      margin: 0.75rem 0 0;
+      background: #252538;
+      color: #e4e4ed;
+      font-size: 1rem;
+      font-family: inherit;
     }
-    pre code {
-      background: none;
-      padding: 0;
-      color: inherit;
-      font-weight: 400;
+    .input-row input::placeholder { color: #6b6b8a; }
+    .input-row input:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
     }
-    ul {
-      margin: 0.75rem 0 0;
-      padding-left: 1.25rem;
+    .btn {
+      padding: 0.75rem 1.25rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      background: #6366f1;
+      color: #fff;
+      white-space: nowrap;
     }
-    li { margin-bottom: 0.5rem; color: #4a4a6a; }
-    a {
-      color: #4f46e5;
-      text-decoration: none;
-      font-weight: 500;
+    .btn:hover { background: #5558e3; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .result {
+      margin-top: 1.5rem;
+      background: #1e1e32;
+      border-radius: 12px;
+      border: 1px solid #2d2d44;
+      overflow: hidden;
     }
-    a:hover { text-decoration: underline; }
+    .result-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #2d2d44;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .result-header a { color: #818cf8; text-decoration: none; }
+    .result-header a:hover { text-decoration: underline; }
+    .checks {
+      padding: 0.5rem 0;
+    }
+    .check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid #252538;
+    }
+    .check:last-child { border-bottom: none; }
+    .icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .icon.pass { background: #065f46; color: #6ee7b7; }
+    .icon.warn { background: #78350f; color: #fcd34d; }
+    .icon.fail { background: #7f1d1d; color: #fca5a5; }
+    .icon.info { background: #1e3a5f; color: #93c5fd; }
+    .check-body { flex: 1; min-width: 0; }
+    .check-name { font-weight: 600; margin-bottom: 0.2rem; }
+    .check-msg { color: #8b8ba7; font-size: 0.9rem; }
+    .check-value { margin-top: 0.35rem; font-size: 0.85rem; color: #a5b4fc; word-break: break-all; }
+    .error-box {
+      padding: 1rem 1.25rem;
+      background: #2d1f1f;
+      border: 1px solid #5c2d2d;
+      border-radius: 10px;
+      color: #fca5a5;
+      margin-top: 1rem;
+    }
     .footer {
+      margin-top: 2rem;
       text-align: center;
-      margin-top: 2.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(26, 26, 46, 0.08);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #6b6b8a;
     }
-    .footer a { color: #4f46e5; }
+    .footer a { color: #818cf8; text-decoration: none; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header class="hero">
-      <h1>Claude Ads</h1>
-      <p>Paid advertising audit & optimization skill for Claude Code. Google Ads, Meta, YouTube, LinkedIn, TikTok & Microsoft Ads — 190 checks and industry templates.</p>
-      <div class="badges">
-        <span class="badge">Claude Code Skill</span>
-        <span class="badge">MIT</span>
-      </div>
-    </header>
+    <h1>CRO Tool</h1>
+    <p class="sub">Audit af landingsside: titel, meta, H1, viewport, CTA, formularer og mere.</p>
 
-    <section class="card">
-      <h2>Install</h2>
-      <p>One-command install (Unix/macOS/Linux):</p>
-      <pre><code>curl -fsSL https://raw.githubusercontent.com/Frederikhs11061/claudeadtool/main/install.sh | bash</code></pre>
-      <p>Or clone and run install:</p>
-      <pre><code>git clone https://github.com/Frederikhs11061/claudeadtool.git
-cd claudeadtool
-./install.sh</code></pre>
-    </section>
+    <div class="input-row">
+      <input
+        type="url"
+        id="url"
+        placeholder="https://eksempel.dk/landing"
+        autocomplete="url"
+      >
+      <button type="button" class="btn" id="run">Analyser</button>
+    </div>
 
-    <section class="card">
-      <h2>Quick start in Claude Code</h2>
-      <ul>
-        <li><code>/ads audit</code> — full multi-platform audit</li>
-        <li><code>/ads google</code> — Google Ads</li>
-        <li><code>/ads meta</code> — Meta Ads</li>
-        <li><code>/ads linkedin</code> — LinkedIn Ads</li>
-        <li><code>/ads plan saas</code> — strategic plan (saas, ecommerce, etc.)</li>
-      </ul>
-    </section>
+    <div id="out"></div>
 
     <footer class="footer">
-      <a href="https://github.com/Frederikhs11061/claudeadtool">View on GitHub</a> · Based on <a href="https://github.com/AgriciDaniel/claude-ads">AgriciDaniel/claude-ads</a>
+      <a href="https://github.com/Frederikhs11061/claudeadtool">Claude Ads · GitHub</a>
     </footer>
   </div>
+
+  <script>
+    const urlInput = document.getElementById('url');
+    const runBtn = document.getElementById('run');
+    const out = document.getElementById('out');
+
+    function renderResult(json) {
+      if (json.error) {
+        out.innerHTML = '<div class="error-box">' + escapeHtml(json.error) + '</div>';
+        return;
+      }
+      const checks = json.checks || [];
+      const base = window.location.origin;
+      let html = '<div class="result">';
+      html += '<div class="result-header"><span>Resultat for</span> <a href="' + escapeHtml(json.url) + '" target="_blank" rel="noopener">' + escapeHtml(json.url) + '</a></div>';
+      html += '<div class="checks">';
+      checks.forEach(function (c) {
+        html += '<div class="check">';
+        html += '<span class="icon ' + (c.status || 'info') + '">' + (c.status === 'pass' ? '✓' : c.status === 'fail' ? '✕' : c.status === 'warn' ? '!' : 'i') + '</span>';
+        html += '<div class="check-body">';
+        html += '<div class="check-name">' + escapeHtml(label(c.name)) + '</div>';
+        html += '<div class="check-msg">' + escapeHtml(c.message) + '</div>';
+        if (c.value != null && c.value !== '') html += '<div class="check-value">' + escapeHtml(String(c.value)) + '</div>';
+        html += '</div></div>';
+      });
+      html += '</div></div>';
+      out.innerHTML = html;
+    }
+
+    function label(key) {
+      const labels = {
+        title: 'Titel',
+        meta_description: 'Meta beskrivelse',
+        h1: 'H1',
+        viewport: 'Viewport',
+        word_count: 'Ord på siden',
+        cta: 'Call-to-action',
+        form: 'Formular',
+        opengraph: 'Open Graph',
+        schema: 'Schema',
+        phone: 'Telefon',
+      };
+      return labels[key] || key;
+    }
+
+    function escapeHtml(s) {
+      const div = document.createElement('div');
+      div.textContent = s;
+      return div.innerHTML;
+    }
+
+    runBtn.addEventListener('click', async function () {
+      const url = urlInput.value.trim();
+      if (!url) return;
+      runBtn.disabled = true;
+      out.innerHTML = '<div class="sub">Henter og analyserer …</div>';
+      try {
+        const base = window.location.origin;
+        const res = await fetch(base + '/api/landing?url=' + encodeURIComponent(url));
+        const json = await res.json();
+        renderResult(json);
+      } catch (e) {
+        renderResult({ error: 'Kunne ikke kalde API: ' + e.message });
+      }
+      runBtn.disabled = false;
+    });
+
+    urlInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') runBtn.click();
+    });
+  </script>
 </body>
 </html>

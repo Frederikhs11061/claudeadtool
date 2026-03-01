@@ -1,15 +1,32 @@
 """
 Vercel serverless API for landing page audit.
-Uses scripts/fetch_page.py and same result/grading structure as scripts/analyze_landing.py.
+Uses fetch_page logic from scripts/fetch_page.py and grading from analyze_landing.py.
 """
 import json
 import re
-import sys
 from urllib.parse import parse_qs, urlparse
 
-# Allow importing from repo scripts
-sys.path.insert(0, ".")
-from scripts.fetch_page import fetch_page
+# Inline fetch_page from scripts/fetch_page.py (avoids import path issues on Vercel)
+def fetch_page(url, timeout=30, follow_redirects=True, max_redirects=5):
+    """Same as scripts/fetch_page.py fetch_page()."""
+    result = {"url": url, "status_code": None, "content": None, "error": None}
+    parsed = urlparse(url)
+    if not parsed.scheme:
+        url = "https://" + url
+        parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        result["error"] = f"Invalid URL scheme: {parsed.scheme}"
+        return result
+    try:
+        import urllib.request
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; ClaudeAds/1.1)"})
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            result["url"] = resp.geturl()
+            result["status_code"] = resp.getcode()
+            result["content"] = resp.read().decode("utf-8", errors="replace")
+    except Exception as e:
+        result["error"] = str(e)
+    return result
 
 
 def parse_html(html):
@@ -156,31 +173,34 @@ class handler(BaseHTTPRequestHandler):
         return self._handle()
 
     def _handle(self):
-        url_param = None
-        parsed = urlparse(self.path)
-        if parsed.query:
-            qs = parse_qs(parsed.query)
-            url_param = (qs.get("url") or [None])[0]
-        if not url_param and self.command == "POST":
-            try:
-                length = int(self.headers.get("Content-Length", 0))
-                body = self.rfile.read(length).decode("utf-8")
-                data = json.loads(body) if body else {}
-                url_param = data.get("url")
-            except Exception:
-                pass
+        try:
+            url_param = None
+            parsed = urlparse(self.path)
+            if parsed.query:
+                qs = parse_qs(parsed.query)
+                url_param = (qs.get("url") or [None])[0]
+            if not url_param and self.command == "POST":
+                try:
+                    length = int(self.headers.get("Content-Length", 0))
+                    body = self.rfile.read(length).decode("utf-8")
+                    data = json.loads(body) if body else {}
+                    url_param = data.get("url")
+                except Exception:
+                    pass
 
-        if not url_param or not isinstance(url_param, str):
-            self._json(400, {"error": "Angiv url (?url=... eller body {\"url\": \"...\"})"})
-            return
+            if not url_param or not isinstance(url_param, str):
+                self._json(400, {"error": "Angiv url (?url=... eller body {\"url\": \"...\"})", "checks": [], "grades": {}, "data": None})
+                return
 
-        url = url_param.strip()
-        if not url.startswith(("http://", "https://")):
-            url = "https://" + url
+            url = url_param.strip()
+            if not url.startswith(("http://", "https://")):
+                url = "https://" + url
 
-        fetch_result = fetch_page(url, timeout=15)
-        out = analyze_from_html(fetch_result)
-        self._json(200, out)
+            fetch_result = fetch_page(url, timeout=15)
+            out = analyze_from_html(fetch_result)
+            self._json(200, out)
+        except Exception as e:
+            self._json(200, {"error": str(e), "checks": [], "grades": {}, "data": None})
 
     def _json(self, code, data):
         self.send_response(code)

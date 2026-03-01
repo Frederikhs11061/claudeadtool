@@ -4,48 +4,158 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Claude Ads — Paid advertising audit for Claude Code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: 'DM Sans', system-ui, sans-serif;
       line-height: 1.6;
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-      color: #1a1a1a;
-      background: #fafafa;
+      margin: 0;
+      color: #1a1a2e;
+      background: linear-gradient(165deg, #f8f9fc 0%, #eef1f8 50%, #e4e9f4 100%);
+      min-height: 100vh;
     }
-    h1 { font-size: 1.75rem; margin-top: 0; }
-    a { color: #0066cc; }
-    code { background: #eee; padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.9em; }
-    pre { background: #1a1a1a; color: #e0e0e0; padding: 1rem; border-radius: 8px; overflow-x: auto; }
-    pre code { background: none; padding: 0; color: inherit; }
-    .badge { display: inline-block; background: #e0e0e0; padding: 0.2em 0.5em; border-radius: 4px; font-size: 0.85rem; margin-right: 0.5rem; }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .hero h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #1a1a2e 0%, #3d3d6b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #4a4a6a;
+      margin: 0;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .badges {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(26, 26, 46, 0.08);
+      color: #3d3d6b;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 2px 12px rgba(26, 26, 46, 0.06);
+      border: 1px solid rgba(26, 26, 46, 0.06);
+    }
+    .card h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+      color: #1a1a2e;
+    }
+    .card p { margin: 0 0 0.75rem; color: #4a4a6a; }
+    .card p:last-of-type { margin-bottom: 0; }
+    code {
+      background: #f0f1f5;
+      padding: 0.2em 0.45em;
+      border-radius: 6px;
+      font-size: 0.88em;
+      font-weight: 500;
+      color: #2d2d4a;
+    }
+    pre {
+      background: #1a1a2e;
+      color: #e4e4ed;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      margin: 0.75rem 0 0;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+      font-weight: 400;
+    }
+    ul {
+      margin: 0.75rem 0 0;
+      padding-left: 1.25rem;
+    }
+    li { margin-bottom: 0.5rem; color: #4a4a6a; }
+    a {
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    a:hover { text-decoration: underline; }
+    .footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(26, 26, 46, 0.08);
+      font-size: 0.9rem;
+      color: #6b6b8a;
+    }
+    .footer a { color: #4f46e5; }
   </style>
 </head>
 <body>
-  <h1>Claude Ads</h1>
-  <p>Paid advertising audit & optimization skill for <strong>Claude Code</strong>. Covers Google Ads, Meta, YouTube, LinkedIn, TikTok & Microsoft Ads with 190 audit checks and industry templates.</p>
-  <p><span class="badge">Claude Code Skill</span> <span class="badge">MIT</span></p>
+  <div class="wrap">
+    <header class="hero">
+      <h1>Claude Ads</h1>
+      <p>Paid advertising audit & optimization skill for Claude Code. Google Ads, Meta, YouTube, LinkedIn, TikTok & Microsoft Ads — 190 checks and industry templates.</p>
+      <div class="badges">
+        <span class="badge">Claude Code Skill</span>
+        <span class="badge">MIT</span>
+      </div>
+    </header>
 
-  <h2>Install</h2>
-  <p>One-command install (Unix/macOS/Linux):</p>
-  <pre><code>curl -fsSL https://raw.githubusercontent.com/Frederikhs11061/claudeadtool/main/install.sh | bash</code></pre>
-  <p>Or clone and install manually:</p>
-  <pre><code>git clone https://github.com/Frederikhs11061/claudeadtool.git
+    <section class="card">
+      <h2>Install</h2>
+      <p>One-command install (Unix/macOS/Linux):</p>
+      <pre><code>curl -fsSL https://raw.githubusercontent.com/Frederikhs11061/claudeadtool/main/install.sh | bash</code></pre>
+      <p>Or clone and run install:</p>
+      <pre><code>git clone https://github.com/Frederikhs11061/claudeadtool.git
 cd claudeadtool
 ./install.sh</code></pre>
+    </section>
 
-  <h2>Quick start</h2>
-  <p>In Claude Code:</p>
-  <ul>
-    <li><code>/ads audit</code> — full multi-platform audit</li>
-    <li><code>/ads google</code> — Google Ads</li>
-    <li><code>/ads meta</code> — Meta Ads</li>
-    <li><code>/ads linkedin</code> — LinkedIn Ads</li>
-    <li><code>/ads plan saas</code> — strategic plan (e.g. saas, ecommerce)</li>
-  </ul>
+    <section class="card">
+      <h2>Quick start in Claude Code</h2>
+      <ul>
+        <li><code>/ads audit</code> — full multi-platform audit</li>
+        <li><code>/ads google</code> — Google Ads</li>
+        <li><code>/ads meta</code> — Meta Ads</li>
+        <li><code>/ads linkedin</code> — LinkedIn Ads</li>
+        <li><code>/ads plan saas</code> — strategic plan (saas, ecommerce, etc.)</li>
+      </ul>
+    </section>
 
-  <p><a href="https://github.com/Frederikhs11061/claudeadtool">View on GitHub</a> · Based on <a href="https://github.com/AgriciDaniel/claude-ads">AgriciDaniel/claude-ads</a></p>
+    <footer class="footer">
+      <a href="https://github.com/Frederikhs11061/claudeadtool">View on GitHub</a> · Based on <a href="https://github.com/AgriciDaniel/claude-ads">AgriciDaniel/claude-ads</a>
+    </footer>
+  </div>
 </body>
 </html>
